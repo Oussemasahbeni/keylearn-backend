@@ -1,0 +1,86 @@
+name: kylearn
+services:
+  postgres:
+    container_name: postgres-sql-kylearn
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: kylearn
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - kylearn-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U username" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  keycloak:
+    container_name: keycloak-kylearn
+    image: quay.io/keycloak/keycloak:26.1
+    ports:
+      - "8082:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - kylearn-network
+    volumes:
+      - ./themes:/opt/keycloak/providers/
+    command:
+      - "start-dev"
+  mail-dev:
+    container_name: mail-dev-kylearn
+    image: maildev/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - kylearn-network
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus-kylearn
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: unless-stopped
+    networks:
+      - kylearn-network
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana-kylearn
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    volumes:
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - kylearn-network
+  loki:
+    image: grafana/loki:latest
+    container_name: loki-kylearn
+    ports:
+      - "3100:3100"
+    volumes:
+      - loki-data:/loki
+    command: [ "-config.file=/etc/loki/local-config.yaml" ]
+    networks:
+      - kylearn-network
+
+networks:
+  kylearn-network:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local
+  pgadmin-data:
+    driver: local
+  loki-data:
+    driver: local

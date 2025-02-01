@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  flyway:
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    table: flyway_history
+  docker:
+    compose:
+      lifecycle-management: start_only
+  cloud:
+    azure:
+      storage:
+        blob:
+          account-name: ${AZURE_ACCOUNT_NAME}
+          account-key: ${AZURE_ACCOUNT_KEY}
+          connection-string: ${AZURE_CONNECTION_STRING}
+          endpoint: ${AZURE_ENDPOINT}
+  mail:
+    host: localhost
+    port: 1025
+    username: saha@contact.com
+    password: oussema
+    properties:
+      mail:
+        smtp:
+          trust: '*'
+        auth: true
+        starttls:
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+  threads:
+    virtual:
+      enabled: false
+

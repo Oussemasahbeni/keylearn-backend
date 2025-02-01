@@ -1,0 +1,11 @@
+
+${AnsiColor.MAGENTA}      ██╗  ██╗██╗   ██╗██╗     ███████╗ █████╗ ██████╗ ███╗   ██╗
+${AnsiColor.MAGENTA}      ██║ ██╔╝╚██╗ ██╔╝██║     ██╔════╝██╔══██╗██╔══██╗████╗  ██║
+${AnsiColor.MAGENTA}      █████╔╝  ╚████╔╝ ██║     █████╗  ███████║██████╔╝██╔██╗ ██║
+${AnsiColor.MAGENTA}      ██╔═██╗   ╚██╔╝  ██║     ██╔══╝  ██╔══██║██╔══██╗██║╚██╗██║
+${AnsiColor.MAGENTA}      ██║  ██╗   ██║   ███████╗███████╗██║  ██║██║  ██║██║ ╚████║
+${AnsiColor.MAGENTA}      ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
+
+
+${AnsiColor.BRIGHT_BLUE}:: Inspark 🤓  :: Running Spring Boot ${spring-boot.version} :: Startup profile(s) ${spring.profiles.active} ::
+${AnsiColor.BRIGHT_BLUE}:: OneSaha ::${AnsiColor.DEFAULT}

@@ -1,0 +1,11 @@
+scrape_configs:
+  - job_name: 'spring-boot-application'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 15s
+    static_configs:
+      - targets: [ 'host.docker.internal:8081' ]  # This is the host machine's IP address , don't use it in production
+        labels:
+          application: 'Keylearn backend'
+  - job_name: 'loki'
+    static_configs:
+      - targets: [ 'loki:3100' ]
