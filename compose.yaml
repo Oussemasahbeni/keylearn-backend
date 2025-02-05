@@ -1,19 +1,19 @@
-name: kylearn
+name: keylearn
 services:
   postgres:
-    container_name: postgres-sql-kylearn
+    container_name: postgres-sql-keylearn
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
       PGDATA: /var/lib/postgresql/data
-      POSTGRES_DB: kylearn
+      POSTGRES_DB: keylearn
     volumes:
       - postgres:/data/postgres
     ports:
       - "5432:5432"
     networks:
-      - kylearn-network
+      - keylearn-network
     restart: unless-stopped
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U username" ]
@@ -21,60 +21,69 @@ services:
       timeout: 5s
       retries: 5
   keycloak:
-    container_name: keycloak-kylearn
+    container_name: keycloak-keylearn
     image: quay.io/keycloak/keycloak:26.1
     ports:
       - "8082:8080"
     environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres/keycloak-keylearn
+      KC_DB_USERNAME: username
+      KC_DB_PASSWORD: password
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      WEBHOOK_URL: "http://host.docker.internal:8081/api/v1/kc/sync"
     networks:
-      - kylearn-network
+      - keylearn-network
     volumes:
-      - ./themes:/opt/keycloak/providers/
+      - ./kcproviders:/opt/keycloak/providers/
+    restart: unless-stopped
+    depends_on:
+      # Ensure PostgreSQL starts first
+      - postgres
     command:
       - "start-dev"
   mail-dev:
-    container_name: mail-dev-kylearn
+    container_name: mail-dev-keylearn
     image: maildev/maildev
     ports:
       - "1080:1080"
       - "1025:1025"
     networks:
-      - kylearn-network
+      - keylearn-network
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus-kylearn
+    container_name: prometheus-keylearn
     ports:
       - "9090:9090"
     volumes:
       - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     restart: unless-stopped
     networks:
-      - kylearn-network
+      - keylearn-network
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana-kylearn
+    container_name: grafana-keylearn
     ports:
       - "3000:3000"
     restart: unless-stopped
     volumes:
       - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
     networks:
-      - kylearn-network
+      - keylearn-network
   loki:
     image: grafana/loki:latest
-    container_name: loki-kylearn
+    container_name: loki-keylearn
     ports:
       - "3100:3100"
     volumes:
       - loki-data:/loki
     command: [ "-config.file=/etc/loki/local-config.yaml" ]
     networks:
-      - kylearn-network
+      - keylearn-network
 
 networks:
-  kylearn-network:
+  keylearn-network:
     driver: bridge
 
 volumes:

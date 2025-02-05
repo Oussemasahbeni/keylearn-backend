@@ -40,34 +40,15 @@ public class ExistsException extends ApplicationException {
         "error.server.exists.email-already-verified.title",
         "error.server.exists.email-already-verified.msg",
         "Email already verified"),
-    ARTICLE_ALREADY_EXISTS(
-        "error.server.exists.article-already-exists.title",
-        "error.server.exists.article-already-exists.msg",
-        "Article already exists in the collection"),
-    RESOURCE_ALREADY_EXISTS(
-        "error.server.exists.resource-already-exists.title",
-        "error.server.exists.resource-already-exists.msg",
-        "Resource already exists"),
-    POST_ALREADY_EXISTS(
-        "error.server.exists.post-already-exists.title",
-        "error.server.exists.post-already-exists.msg",
-        "Post already exists"),
-    COLLECTION_ALREADY_EXISTS(
-        "error.server.exists.collection-already-exists.title",
-        "error.server.exists.collection-already-exists.msg",
-        "Collection already exists"),
+    USER_ALREADY_EXISTS(
+        "error.server.exists.user-already-exists.title",
+        "error.server.exists.user-already-exists.msg",
+        "User already exists"),
+
     CONTENT_ALREADY_EXISTS(
         "error.server.exists.content-already-exists.title",
         "error.server.exists.content-already-exists.msg",
-        "Content already exists"),
-    NEWS_ALREADY_EXISTS(
-        "error.server.exists.news-already-exists.title",
-        "error.server.exists.news-already-exists.msg",
-        "News already exists"),
-    ALREADY_SUBSCRIBED(
-        "error.server.exists.already-subscribed.title",
-        "error.server.exists.already-subscribed.msg",
-        "Already subscribed");
+        "Content already exists");
 
     private final String messageKey;
     private final String titleKey;

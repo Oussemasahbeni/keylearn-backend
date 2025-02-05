@@ -2,7 +2,7 @@ spring:
   profiles:
     active: prod
   application:
-    name: kylearn
+    name: keylearn
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
