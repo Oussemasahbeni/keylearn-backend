@@ -22,7 +22,7 @@ services:
       retries: 5
   keycloak:
     container_name: keycloak-keylearn
-    image: quay.io/keycloak/keycloak:26.1
+    image: quay.io/keycloak/keycloak:26.1.1
     ports:
       - "8082:8080"
     environment:
